@@ -4,8 +4,6 @@ import re
 
 
 def filter_datum(fields, redaction, message, separator) -> str:
-    """
-         returns the log message obfuscated:
-    """
+    """returns the log message obfuscated:"""
     pattern = '|'.join([f'(?<={field}=)[^{separator}]*' for field in fields])
     return re.sub(pattern, redaction, message)
