@@ -3,12 +3,7 @@
 import re
 
 
-def filter_datum(
-                 fields: str,
-                 redaction: str,
-                 message: str,
-                 separator: str
-                 ) -> str:
+def filter_datum(fields, redaction, message, separator) -> str:
     """
          returns the log message obfuscated:
     """
