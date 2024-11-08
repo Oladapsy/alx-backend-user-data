@@ -33,5 +33,5 @@ class RedactingFormatter(logging.Formatter):
             in incoming log records using filter_datum
         """
         record.message = filter_datum(self.fields, self.REDACTION,
-                                  record.getMessage(), self.SEPARATOR)
+                                      record.getMessage(), self.SEPARATOR)
         return super(RedactingFormatter, self).format(record)
