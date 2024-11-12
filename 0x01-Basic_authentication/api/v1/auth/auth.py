@@ -15,8 +15,8 @@ class Auth:
         """
         if path is None:
             return True
-        ex_len = len(excluded_paths)
-        if excluded_paths is None or ex_len == 0:
+
+        if excluded_paths is None or len(excluded_paths) == 0:
             return True
 
         normalize_path = path.rstrip('/')
