@@ -10,8 +10,22 @@ class Auth:
         """the initialization method"""
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """ public method"""
-        return False
+        """ returns True if the path is not in the
+            list of strings excluded_paths:
+        """
+        if path is None:
+            return True
+        ex_len = len(excluded_paths)
+        if excluded_paths is None or ex_len == 0:
+            return True
+
+        normalize_path = path.rstrip('/')
+        for excluded in excluded_paths:
+            normalize_excluded = excluded.rstrip("/")
+            if normanlize_path == normalize_excluded:
+                return False
+
+        return True
 
     def authorization_header(self, request=None) -> str:
         """public method"""
