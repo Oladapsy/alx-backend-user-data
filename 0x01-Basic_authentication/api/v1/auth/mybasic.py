@@ -59,20 +59,16 @@ class BasicAuth(Auth):
                                      user_email: str, user_pwd: str
                                      ) -> TypeVar('User'):
         """returns the User instance based on his email and password."""
-        if not all(map(lambda x: isinstance(x, str), (user_email, user_pwd))):
+        if user_email is None or not isinstance(user_email, str):
             return None
-        try:
-            # Search for the user in the database
-            user = User.search(attributes={'email': user_email})
-        except Exception:
+        if user_pwd is None or not isinstance(user_pwd, str):
             return None
-        # Return None if there is no user in the database with the given email
-        if not user:
+
+        users = User.search({"email": user_email})
+        if users is None or len(users) == 0:
             return None
-        # Get the first user from the search results
-        user = user[0]
-        # Return None if the password is invalid
-        if not user.is_valid_password(user_pwd):
-            return None
-        # Return the user instance
-        return user
+        if users:
+            for user in users:
+                if user.is_valid_password(user_pwd):
+                    return user
+        return None
