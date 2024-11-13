@@ -1,4 +1,4 @@
-#!/usr/bin/enbv python3
+#!/usr/bin/env python3
 """ Basic authentication class"""
 from .auth import Auth
 
