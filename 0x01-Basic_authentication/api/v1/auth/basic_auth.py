@@ -62,6 +62,7 @@ class BasicAuth(Auth):
         if not user_email and not user_pwd:
             if type(user_email) is not str and type(user_pwd) is not str:
                 return None
+        from models.user import User
         users = User.search({"email": user_email})
         if users:
             for user in users:
