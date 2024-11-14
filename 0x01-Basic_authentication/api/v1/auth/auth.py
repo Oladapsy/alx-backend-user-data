@@ -22,7 +22,12 @@ class Auth:
         normalize_path = path.rstrip('/')
         for excluded in excluded_paths:
             normalize_excluded = excluded.rstrip("/")
-            if normalize_path == normalize_excluded:
+            if normalize_excluded.endswith('*'):
+                # Remove the '*' from the excluded path and check if the
+                # current path starts with it
+                if normalize_path.startswith(normalize_excluded[:-1]):
+                    return False
+            elif normalize_path == normalize_excluded:
                 return False
 
         return True
