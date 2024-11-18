@@ -33,7 +33,8 @@ def authenicate():
         if auth.require_auth(request.path, excluded_paths):
             if not auth.authorization_header(request):
                 return abort(401)
-            if not auth.current_user(request):
+            request.current_user = auth.current_user(request)
+            if not request.current_user:
                 return abort(403)
 
 
