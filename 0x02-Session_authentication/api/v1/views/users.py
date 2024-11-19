@@ -124,3 +124,28 @@ def update_user(user_id: str = None) -> str:
         user.last_name = rj.get('last_name')
     user.save()
     return jsonify(user.to_json()), 200
+
+
+@app_views.route('/users/me', methods=['GET'], strict_slashes=False)
+def get_user_me():
+    """ Get the current authenticated user """
+    if auth is None:
+        abort(401, description="Unauthorized")
+
+    session_name = getenv('SESSION_NAME')
+    if not session_name:
+        return jsonify({"error": "Session name not set"}), 500
+
+    session_id = request.cookies.get(session_name)
+    if not session_id:
+        return jsonify({"error": "Session ID missing"}), 401
+
+    user_id = auth.user_id_for_session_id(session_id)
+    if user_id is None:
+        return jsonify({"error": "Session expired or invalid"}), 401
+
+    user = User.get(user_id)
+    if user is None:
+        return jsonify({"error": "User not found"}), 404
+
+    return jsonify(user.to_json())
