@@ -28,6 +28,18 @@ class SessionDBAuth(SessionExpAuth):
             return None
 
         session = sessions[0]
+        if self.session_duration <= 0:
+            return session.user_id
+
+        created_at = session.created_at
+        if created_at is None:
+            return None
+
+        if created_at + timedelta(seconds=self.session_duration
+                                  ) < datetime.now():
+            session.remove()  # Remove expired session
+            return None
+
         return session.user_id
 
     def destroy_session(self, request=None):
