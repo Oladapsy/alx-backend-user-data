@@ -40,9 +40,9 @@ class SessionExpAuth(SessionAuth):
             return None
 
         if self.session_duration <= 0:
-            return section_dictionary.get('user_id')
+            return session_dictionary.get('user_id')
 
-        created_at = section_dictionary.get('created_at')
+        created_at = session_dictionary.get('created_at')
         if created_at is None:
             return None
 
