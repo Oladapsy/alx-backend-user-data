@@ -7,13 +7,13 @@ from os import getenv
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
-def login():
+def login() -> str:
     """login rouute"""
-    u_email = request.form.get(email)
+    u_email = request.form.get('email')
     if not u_email:
         return jsonify({"error": "email missing"}), 400
 
-    u_password = request.form.get(password)
+    u_password = request.form.get('password')
     if not u_password:
         return jsonify({"error": "password missing"}), 400
 
