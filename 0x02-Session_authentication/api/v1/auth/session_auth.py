@@ -40,7 +40,6 @@ class SessionAuth(Auth):
         if user_id is None:
             return None
 
-        try:
-            return User.get(user_id)
-        except Exception as e:
-            return None
+        user = User.get(user_id)
+        # Return the User instance
+        return user
