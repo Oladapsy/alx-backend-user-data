@@ -91,4 +91,5 @@ class Auth:
             raise ValueError
         token = _generate_uuid()
         user.reset_token = token
+        self._db._session.commit()
         return token
