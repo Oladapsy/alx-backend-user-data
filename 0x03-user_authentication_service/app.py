@@ -58,11 +58,13 @@ def logout() -> Response:
 
 
 @app.route('/profile', methods=['GET'], strict_slashes=False)
-def profile():
+def profile() -> Response:
     """implement a profile function to respond to the GET /profile route."""
     session_id = request.cookies.get('session_id')
+    if session_id is None:
+        abort(403)
     user = AUTH.get_user_from_session_id(session_id)
-    if session_id is None or user is None:
+    if user is None:
         abort(403)
     return jsonify({"email": "<user email>"}), 200
 
