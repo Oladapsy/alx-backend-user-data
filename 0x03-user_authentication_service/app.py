@@ -87,11 +87,11 @@ def get_reset_password_token() -> Response:
 def update_password() -> Response:
     """update the password"""
     email = request.form.get('email')
-    token = request.form.get('reset_token')
+    reset_token = request.form.get('reset_token')
     new_password = request.form.get('new_password')
     try:
-        AUTH.update_password(token, new_password)
-    except Exception:
+        AUTH.update_password(reset_token, new_password)
+    except ValueError:
         abort(403)
     return jsonify({"email": email, "message": "Password updated"}), 200
 
